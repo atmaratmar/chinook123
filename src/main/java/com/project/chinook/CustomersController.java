@@ -10,7 +10,7 @@ import java.util.Arrays;
 @Controller
 public class CustomersController {
 
-    @GetMapping
+    @GetMapping("atmar")
     String getAllCustomers(Model model){
         SqliteHelper helper = new SqliteHelper();
 
