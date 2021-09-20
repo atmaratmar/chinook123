@@ -1,6 +1,7 @@
 package com.project.chinook.controller;
 
 import com.project.chinook.data_access.CustomerRepository;
+import com.project.chinook.models.CountryCount;
 import com.project.chinook.models.Customer;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,14 +45,21 @@ public class CustomerController {
      This returns a specific customer, based on a given Id.
      We use a path variable here to extract the Id.
     */
-    @RequestMapping(value = "api/customers/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "api/customers/id/{id}", method = RequestMethod.GET)
     public Customer getCustomerById(@PathVariable int id){
         return customerRepository.getCustomerById(id);
     }
-    @RequestMapping(value = "api/customer/{Name}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "api/customers/name/{Name}", method = RequestMethod.GET)
     public ArrayList<Customer> getCustomerByName(@PathVariable String Name){
         return customerRepository.getCustomerByName(Name);
     }
+
+    @RequestMapping(value = "api/customers/country", method = RequestMethod.GET)
+    public ArrayList<CountryCount> getCustomerByCountry(){
+        return customerRepository.getCustomerByCountry();
+    }
+
     /*
      This adds a new customer.
      It takes the new customer from the body of the request.

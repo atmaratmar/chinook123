@@ -1,6 +1,7 @@
 package com.project.chinook.data_access;
 
 import com.project.chinook.logging.LogToConsole;
+import com.project.chinook.models.CountryCount;
 import com.project.chinook.models.Customer;
 import org.springframework.stereotype.Repository;
 
@@ -209,6 +210,46 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                                 resultSet.getString("Phone"),
                                 resultSet.getString("Email")
                         ));
+            }
+            logger.log("Select all customers successful");
+        }
+        catch (Exception exception){
+            logger.log(exception.toString());
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (Exception exception){
+                logger.log(exception.toString());
+            }
+        }
+        return customers;
+    }
+
+    @Override
+    public ArrayList<CountryCount> getCustomerByCountry() {
+        ArrayList<CountryCount> customers = new ArrayList<>();
+        try{
+            // Connect to DB
+            conn = DriverManager.getConnection(URL);
+            logger.log("Connection to SQLite has been established.");
+
+            // Make SQL query
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT Country, count(*) as CustomerCount from Customers GROUP BY Country ORDER BY CustomerCount DESC ");
+
+            System.out.println(preparedStatement);
+            // Execute Query
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println(resultSet);
+            while (resultSet.next()) {
+
+                        CountryCount  customersInEachCountries = new CountryCount();
+                        customersInEachCountries.number = resultSet.getInt("CustomerCount");
+                         customersInEachCountries.Name = resultSet.getString("Country");
+                          customers.add(customersInEachCountries);
+
             }
             logger.log("Select all customers successful");
         }
