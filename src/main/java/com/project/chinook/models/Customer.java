@@ -4,17 +4,25 @@ public class Customer {
     private int customerId;
     private String FirstName;
     private String LastName;
-    private String Company;
+    private String Country;
+    private String PostalCode;
+    private String Phone;
+    private  String Email;
 
     public Customer() {
     }
 
-    public Customer(int customerId, String FirstName, String LastName, String Company) {
+    public Customer(int customerId, String firstName, String lastName, String country, String postalCode, String phone, String email) {
         this.customerId = customerId;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Company = Company;
+        FirstName = firstName;
+        LastName = lastName;
+        Country = country;
+        PostalCode = postalCode;
+        Phone = phone;
+        Email = email;
     }
+
+
 
     // Getters and setters
 
@@ -42,11 +50,34 @@ public class Customer {
         this.LastName = lastName;
     }
 
-    public String getCompany() {
-        return Company;
+    public String getCountry() {
+        return Country;
     }
 
-    public void setCompany(String company) {
-        this.Company = company;
+    public void setCountry(String country) {
+        this.Country = country;
+    }
+    public String getPostalCode() {
+        return PostalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        PostalCode = postalCode;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 }

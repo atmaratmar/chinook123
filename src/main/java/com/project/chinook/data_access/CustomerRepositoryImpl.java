@@ -42,7 +42,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Company FROM customers");
+                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country ,PostalCode,Phone,Email  FROM customers");
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -52,7 +52,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                                 resultSet.getInt("CustomerId"),
                                 resultSet.getString("FirstName"),
                                 resultSet.getString("LastName"),
-                                resultSet.getString("Company")
+                                resultSet.getString("Country"),
+                                resultSet.getString("PostalCode"),
+                                resultSet.getString("Phone"),
+                                resultSet.getString("Email")
                         ));
             }
             logger.log("Select all customers successful");
@@ -80,7 +83,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Company FROM customers WHERE CustomerId = ?");
+                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country,PostalCode,Phone,Email FROM customers WHERE CustomerId = ?");
             preparedStatement.setInt(1,custId);
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -90,7 +93,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                                 resultSet.getInt("CustomerId"),
                                 resultSet.getString("FirstName"),
                                 resultSet.getString("LastName"),
-                                resultSet.getString("Company")
+                                resultSet.getString("Country"),
+                                resultSet.getString("PostalCode"),
+                                resultSet.getString("Phone"),
+                                resultSet.getString("Email")
+
                         );
             }
             logger.log("Select specific customer successful");
@@ -122,7 +129,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             preparedStatement.setInt(1,customer.getCustomerId());
             preparedStatement.setString(2,customer.getFirstName());
             preparedStatement.setString(3,customer.getLastName());
-            preparedStatement.setString(4,customer.getCompany());
+            preparedStatement.setString(4,customer.getCountry());
             // Execute Query
             int result = preparedStatement.executeUpdate();
             success = (result != 0);
@@ -155,7 +162,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             preparedStatement.setInt(1,customer.getCustomerId());
             preparedStatement.setString(2,customer.getFirstName());
             preparedStatement.setString(3,customer.getLastName());
-            preparedStatement.setString(4,customer.getCompany());
+            preparedStatement.setString(4,customer.getCountry());
             preparedStatement.setInt(5,customer.getCustomerId());
             // Execute Query
             int result = preparedStatement.executeUpdate();
