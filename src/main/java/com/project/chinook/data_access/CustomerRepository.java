@@ -9,4 +9,5 @@ public interface CustomerRepository {
     public Customer getCustomerById(int custId);
     public Boolean addCustomer(Customer customer);
     public Boolean updateCustomer(Customer customer);
+    public  ArrayList<Customer>  getCustomerByName(String name);
 }

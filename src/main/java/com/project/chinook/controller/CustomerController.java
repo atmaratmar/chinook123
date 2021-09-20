@@ -14,7 +14,6 @@ public class CustomerController {
     public CustomerController(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
-
     /*
      This first one just returns all the customers in the database
      it will return a CustomerShort object.
@@ -46,8 +45,12 @@ public class CustomerController {
      We use a path variable here to extract the Id.
     */
     @RequestMapping(value = "api/customers/{id}", method = RequestMethod.GET)
-    public Customer getCustomerByPathId(@PathVariable int id){
+    public Customer getCustomerById(@PathVariable int id){
         return customerRepository.getCustomerById(id);
+    }
+    @RequestMapping(value = "api/customer/{Name}", method = RequestMethod.GET)
+    public ArrayList<Customer> getCustomerByName(@PathVariable String Name){
+        return customerRepository.getCustomerByName(Name);
     }
     /*
      This adds a new customer.
@@ -67,6 +70,5 @@ public class CustomerController {
     public Boolean updateExistingCustomer(@PathVariable String id, @RequestBody Customer customer){
         return customerRepository.updateCustomer(customer);
     }
-
 
 }

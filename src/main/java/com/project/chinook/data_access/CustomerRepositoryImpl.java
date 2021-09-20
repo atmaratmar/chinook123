@@ -182,4 +182,47 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         return success;
     }
+
+    @Override
+    public ArrayList<Customer> getCustomerByName(String name) {
+        ArrayList<Customer> customers = new ArrayList<>();
+        try{
+            // Connect to DB
+            conn = DriverManager.getConnection(URL);
+            logger.log("Connection to SQLite has been established.");
+
+            // Make SQL query
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country ,PostalCode,Phone,Email  FROM customers WHERE FirstName LIKE ?  ");
+            preparedStatement.setString(1,name+'%');
+            // Execute Query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                customers.add(
+                        new Customer(
+                                resultSet.getInt("CustomerId"),
+                                resultSet.getString("FirstName"),
+                                resultSet.getString("LastName"),
+                                resultSet.getString("Country"),
+                                resultSet.getString("PostalCode"),
+                                resultSet.getString("Phone"),
+                                resultSet.getString("Email")
+                        ));
+            }
+            logger.log("Select all customers successful");
+        }
+        catch (Exception exception){
+            logger.log(exception.toString());
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (Exception exception){
+                logger.log(exception.toString());
+            }
+        }
+        return customers;
+    }
 }
