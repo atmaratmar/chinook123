@@ -2,6 +2,7 @@ package com.project.chinook.data_access;
 import com.project.chinook.logging.LogToConsole;
 import com.project.chinook.models.CountryCount;
 import com.project.chinook.models.Customer;
+import com.project.chinook.models.CustomerGenre;
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,7 +37,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             logger.log("Connection to SQLite has been established.");
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country ,PostalCode,Phone,Email  FROM customers");
+                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country ,PostalCode,Phone,Email  FROM Customer");
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -78,7 +79,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             // Make SQL query
             PreparedStatement preparedStatement =
                     //conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country,PostalCode,Phone,Email FROM customers WHERE CustomerId = ?");
-                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country,PostalCode,Phone,Email FROM customers WHERE CustomerId = ?");
+                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country,PostalCode,Phone,Email FROM Customer WHERE CustomerId = ?");
             preparedStatement.setInt(1,custId);
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -120,7 +121,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("INSERT INTO customer(CustomerId,FirstName,LastName,Company) VALUES(?,?,?,?)");
+                    conn.prepareStatement("INSERT INTO Customer(CustomerId,FirstName,LastName,Company) VALUES(?,?,?,?)");
             preparedStatement.setInt(1,customer.getCustomerId());
             preparedStatement.setString(2,customer.getFirstName());
             preparedStatement.setString(3,customer.getLastName());
@@ -153,7 +154,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("UPDATE customer SET CustomerId = ?, FirstName = ?, LastName = ?, Company = ? WHERE Id=?");
+                    conn.prepareStatement("UPDATE Customer SET CustomerId = ?, FirstName = ?, LastName = ?, Company = ? WHERE Id=?");
             preparedStatement.setInt(1,customer.getCustomerId());
             preparedStatement.setString(2,customer.getFirstName());
             preparedStatement.setString(3,customer.getLastName());
@@ -188,7 +189,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country ,PostalCode,Phone,Email  FROM customers WHERE FirstName LIKE ?  ");
+                    conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country ,PostalCode,Phone,Email  FROM Customer WHERE FirstName LIKE ?  ");
             preparedStatement.setString(1,name+'%');
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -231,7 +232,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT Country, count(*) as CustomerCount from Customers GROUP BY Country ORDER BY CustomerCount DESC ");
+                    conn.prepareStatement("SELECT Country, count(*) as CustomerCount from Customer GROUP BY Country ORDER BY CustomerCount DESC ");
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -268,7 +269,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT  * FROM Customers  WHERE CustomerId BETWEEN ? AND ? ");
+                    conn.prepareStatement("SELECT  * FROM Customer  WHERE CustomerId BETWEEN ? AND ? ");
             preparedStatement.setInt(1,ofset+1);
             preparedStatement.setInt(2,limit+ofset);
             // Execute Query
@@ -300,6 +301,60 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             }
         }
         return customers;
+    }
+//http://localhost:8080/api/customers/customer/1
+    @Override
+    public ArrayList<CustomerGenre>  GetCustomerPopularGenre(int id) {
+        ArrayList<CustomerGenre> customerGenres = new ArrayList<>();
+        try{
+            // Connect to DB
+            conn = DriverManager.getConnection(URL);
+            logger.log("Connection to SQLite has been established.");
+
+            // Make SQL query
+            PreparedStatement preparedStatement =
+                    //conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country,PostalCode,Phone,Email FROM customers WHERE CustomerId = ?");
+                    conn.prepareStatement ("SELECT Customer.CustomerId, Customer.FirstName,Customer.LastName, Genre.Name, COUNT( InvoiceLine.Quantity) myCount " +
+                            "FROM Customer " +
+                            "         INNER JOIN Invoice on Customer.CustomerId = Invoice.CustomerId " +
+                            "         INNER JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId " +
+                            "         INNER JOIN Track on InvoiceLine.TrackId = Track.TrackId " +
+                            "         INNER JOIN Genre on Track.GenreId = Genre.GenreId " +
+                            "WHERE Customer.CustomerId = ? " +
+                            "GROUP BY Genre.Name " +
+                            "ORDER BY myCount  DESC ");
+            preparedStatement.setInt(1,id);
+            // Execute Query
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println(resultSet.getString("FirstName"));
+
+            while (resultSet.next()) {
+
+
+
+                     CustomerGenre customerGenre=   new CustomerGenre();
+                    customerGenre.setGenreCount(resultSet.getInt("myCount"));
+                     customerGenre.setGenreName(resultSet.getString("Name"));
+                     customerGenre.setFirstName(resultSet.getString("FirstName"));
+                customerGenres.add(customerGenre);
+
+
+            }
+            logger.log("Select all customers successful");
+        }
+        catch (Exception exception){
+            logger.log(exception.toString());
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (Exception exception){
+                logger.log(exception.toString());
+            }
+        }
+        return customerGenres;
+
     }
 
 }

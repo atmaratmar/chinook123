@@ -8,5 +8,5 @@ package com.project.chinook.data_access;
 */
 
 public class ConnectionHelper {
-    public static final String CONNECTION_URL = "jdbc:sqlite::resource:chinook.db";
+    public static final String CONNECTION_URL = "jdbc:sqlite::resource:Chinook_Sqlite.db";
 }

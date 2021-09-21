@@ -2,6 +2,7 @@ package com.project.chinook.data_access;
 
 import com.project.chinook.models.CountryCount;
 import com.project.chinook.models.Customer;
+import com.project.chinook.models.CustomerGenre;
 
 import java.util.ArrayList;
 
@@ -14,4 +15,6 @@ public interface CustomerRepository {
     public ArrayList<CountryCount> getCustomerByCountry();
 
    public ArrayList<Customer> GetAllCustomersFromLimitOfset(int limit, int ofset);
+
+   public ArrayList<CustomerGenre>  GetCustomerPopularGenre(int id);
 }

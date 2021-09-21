@@ -3,6 +3,7 @@ package com.project.chinook.controller;
 import com.project.chinook.data_access.CustomerRepository;
 import com.project.chinook.models.CountryCount;
 import com.project.chinook.models.Customer;
+import com.project.chinook.models.CustomerGenre;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -63,6 +64,14 @@ public class CustomerController {
     public ArrayList<CountryCount> getCustomerByCountry(){
         return customerRepository.getCustomerByCountry();
     }
+
+    @RequestMapping(value = "api/customers/customer/{id}", method = RequestMethod.GET)
+    public ArrayList<CustomerGenre>  GetCustomerPopularGenre(@PathVariable int id){
+        return customerRepository.GetCustomerPopularGenre(id);
+    }
+
+
+
 
     /*
      This adds a new customer.
