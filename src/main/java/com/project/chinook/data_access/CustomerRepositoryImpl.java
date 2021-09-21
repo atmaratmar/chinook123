@@ -269,8 +269,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             // Make SQL query
             PreparedStatement preparedStatement =
                     conn.prepareStatement("SELECT  * FROM Customers  WHERE CustomerId BETWEEN ? AND ? ");
-            preparedStatement.setInt(1,ofset);
-            preparedStatement.setInt(2,limit);
+            preparedStatement.setInt(1,ofset+1);
+            preparedStatement.setInt(2,limit+ofset);
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
 
