@@ -257,7 +257,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         return customers;
     }
-
+    //http://localhost:8080/api/customers/Ofset/2/Limit/10
     @Override
     public ArrayList<Customer> GetAllCustomersFromLimitOfset(int ofset, int limit) {
         ArrayList<Customer> customers = new ArrayList<>();
@@ -268,7 +268,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT  * FROM Customer ORDER BY CustomerId OFFSET  ? ROWS ONLY  ");
+                    conn.prepareStatement("SELECT  * FROM Customers  WHERE CustomerId BETWEEN ? AND ? ");
             preparedStatement.setInt(1,ofset);
             preparedStatement.setInt(2,limit);
             // Execute Query
