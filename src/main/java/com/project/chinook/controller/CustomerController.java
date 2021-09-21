@@ -4,6 +4,7 @@ import com.project.chinook.data_access.CustomerRepository;
 import com.project.chinook.models.CountryCount;
 import com.project.chinook.models.Customer;
 import com.project.chinook.models.CustomerGenre;
+import com.project.chinook.models.CustomerSpender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -70,7 +71,10 @@ public class CustomerController {
         return customerRepository.GetCustomerPopularGenre(id);
     }
 
-
+    @RequestMapping(value = "api/customers/customerspender", method = RequestMethod.GET)
+    public ArrayList<CustomerSpender>  GetAllCustomersByHighestSpender(){
+        return customerRepository.GetAllCustomersByHighestSpender();
+    }
 
 
     /*
