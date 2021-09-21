@@ -27,7 +27,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
      Need methods to serve the needs of the controller requests.
      Just mirror what your endpoints want.
     */
-
+   //http://localhost:8080/api/customers
     public ArrayList<Customer> getAllCustomers(){
         ArrayList<Customer> customers = new ArrayList<>();
         try{
@@ -67,7 +67,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         return customers;
     }
-
+//http://localhost:8080/api/customers/id/1
     public Customer getCustomerById(int custId){
         Customer customer = null;
         try{
@@ -177,7 +177,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         return success;
     }
-
+  //http://localhost:8080/api/customers/name/ma
     @Override
     public ArrayList<Customer> getCustomerByName(String name) {
         ArrayList<Customer> customers = new ArrayList<>();
@@ -220,7 +220,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         return customers;
     }
-
+   //http://localhost:8080/api/customers/country
     @Override
     public ArrayList<CountryCount> getCustomerByCountry() {
         ArrayList<CountryCount> customers = new ArrayList<>();
