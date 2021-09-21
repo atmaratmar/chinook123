@@ -222,7 +222,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 customersInEachCountries.setNumber(resultSet.getInt("CustomerCount"));
                 customersInEachCountries.setName(resultSet.getString("Country"));
                 customers.add(customersInEachCountries);
-
             }
             logger.log("Select all customers successful");
         } catch (Exception exception) {
@@ -307,8 +306,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 customerGenre.setGenreName(resultSet.getString("Name"));
                 customerGenre.setFirstName(resultSet.getString("FirstName"));
                 customerGenres.add(customerGenre);
-
-
             }
             logger.log("Select all customers successful");
         } catch (Exception exception) {
