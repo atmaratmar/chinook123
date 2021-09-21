@@ -1,10 +1,8 @@
 package com.project.chinook.data_access;
-
 import com.project.chinook.logging.LogToConsole;
 import com.project.chinook.models.CountryCount;
 import com.project.chinook.models.Customer;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,17 +16,13 @@ import java.util.ArrayList;
 */
 @Repository
 public class CustomerRepositoryImpl implements CustomerRepository {
-
     private final LogToConsole logger;
-
     // Setting up the connection object we need.
     private String URL = ConnectionHelper.CONNECTION_URL;
     private Connection conn = null;
-
     public CustomerRepositoryImpl(LogToConsole logger) {
         this.logger = logger;
     }
-
     /*
      Need methods to serve the needs of the controller requests.
      Just mirror what your endpoints want.
@@ -40,7 +34,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             // Connect to DB
             conn = DriverManager.getConnection(URL);
             logger.log("Connection to SQLite has been established.");
-
             // Make SQL query
             PreparedStatement preparedStatement =
                     conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country ,PostalCode,Phone,Email  FROM customers");
@@ -84,6 +77,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             // Make SQL query
             PreparedStatement preparedStatement =
+                    //conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country,PostalCode,Phone,Email FROM customers WHERE CustomerId = ?");
                     conn.prepareStatement("SELECT CustomerId,FirstName, LastName,Country,PostalCode,Phone,Email FROM customers WHERE CustomerId = ?");
             preparedStatement.setInt(1,custId);
             // Execute Query
@@ -238,17 +232,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             // Make SQL query
             PreparedStatement preparedStatement =
                     conn.prepareStatement("SELECT Country, count(*) as CustomerCount from Customers GROUP BY Country ORDER BY CustomerCount DESC ");
-
-            System.out.println(preparedStatement);
             // Execute Query
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println(resultSet);
             while (resultSet.next()) {
 
                         CountryCount  customersInEachCountries = new CountryCount();
-                        customersInEachCountries.number = resultSet.getInt("CustomerCount");
-                         customersInEachCountries.Name = resultSet.getString("Country");
-                          customers.add(customersInEachCountries);
+                        customersInEachCountries.setNumber(resultSet.getInt("CustomerCount"));
+                        customersInEachCountries.setName(resultSet.getString("Country"));
+                         customers.add(customersInEachCountries);
 
             }
             logger.log("Select all customers successful");
@@ -266,4 +257,49 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         return customers;
     }
+
+    @Override
+    public ArrayList<Customer> GetAllCustomersFromLimitOfset(int ofset, int limit) {
+        ArrayList<Customer> customers = new ArrayList<>();
+        try{
+            // Connect to DB
+            conn = DriverManager.getConnection(URL);
+            logger.log("Connection to SQLite has been established.");
+
+            // Make SQL query
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT  * FROM Customer ORDER BY CustomerId OFFSET  ? ROWS ONLY  ");
+            preparedStatement.setInt(1,ofset);
+            preparedStatement.setInt(2,limit);
+            // Execute Query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                customers.add(
+                        new Customer(
+                                resultSet.getInt("CustomerId"),
+                                resultSet.getString("FirstName"),
+                                resultSet.getString("LastName"),
+                                resultSet.getString("Country"),
+                                resultSet.getString("PostalCode"),
+                                resultSet.getString("Phone"),
+                                resultSet.getString("Email")
+                        ));
+            }
+            logger.log("Select all customers successful");
+        }
+        catch (Exception exception){
+            logger.log(exception.toString());
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (Exception exception){
+                logger.log(exception.toString());
+            }
+        }
+        return customers;
+    }
+
 }

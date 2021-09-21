@@ -12,4 +12,6 @@ public interface CustomerRepository {
     public Boolean updateCustomer(Customer customer);
     public  ArrayList<Customer>  getCustomerByName(String name);
     public ArrayList<CountryCount> getCustomerByCountry();
+
+   public ArrayList<Customer> GetAllCustomersFromLimitOfset(int limit, int ofset);
 }

@@ -49,6 +49,10 @@ public class CustomerController {
     public Customer getCustomerById(@PathVariable int id){
         return customerRepository.getCustomerById(id);
     }
+    @RequestMapping(value = "api/customers/Ofset/{Ofset}/Limit/{Limit}", method = RequestMethod.GET)
+    public ArrayList<Customer> GetAllCustomersFromLimitOfset(@PathVariable int Ofset, @PathVariable int Limit){
+        return customerRepository.GetAllCustomersFromLimitOfset(Ofset, Limit);
+    }
 
     @RequestMapping(value = "api/customers/name/{Name}", method = RequestMethod.GET)
     public ArrayList<Customer> getCustomerByName(@PathVariable String Name){
