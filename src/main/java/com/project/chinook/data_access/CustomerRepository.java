@@ -14,9 +14,7 @@ public interface CustomerRepository {
     public Boolean updateCustomer(Customer customer);
     public  ArrayList<Customer>  getCustomerByName(String name);
     public ArrayList<CountryCount> getCustomerByCountry();
-
-   public ArrayList<Customer> GetAllCustomersFromLimitOfset(int limit, int ofset);
-
-   public ArrayList<CustomerGenre>  GetCustomerPopularGenre(int id);
+    public ArrayList<Customer> GetAllCustomersFromLimitOfset(int limit, int ofset);
+    public ArrayList<CustomerGenre>  GetCustomerPopularGenre(int id);
     public ArrayList<CustomerSpender>  GetAllCustomersByHighestSpender();
 }

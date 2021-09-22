@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<script th:src="@{/js/bootstrap.min.js}" ></script>
+<head>
+    <meta charset="UTF-8">
+    <title>View customers</title>
+</head>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: flex;
+            margin-left:-5px;
+            margin-right:-5px;
+        }
+
+        .column {
+            flex: 10%;
+            padding: 5px;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Chinook Project </h2>
+<p>Random table gerator</p>
+
+<div class="row">
+    <div class="column">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Random Artists</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person: ${Artist} ">
+                <td th:text="${person.getName()}"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="column">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Random Trcks</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person: ${Trck} ">
+                <td th:text="${person.getName()}"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="column">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Random Genre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person: ${Genre} ">
+                <td th:text="${person.getName()}"></td>
+            </tr>
+
+        </table>
+    </div>
+    <form th:action="@{/}" method="get">
+        <input id="txtSearch" type="text" name="keyword" required>
+        <button type="submit">go</button>
+
+    </form>
+
+    <div class="column">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Random byname</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person: ${Customer} ">
+                <td th:text="${person.getFirstName()}"></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+</body>
+</html>
