@@ -124,47 +124,6 @@ public class CustomerthymeleafRepo implements CustomerthymeRepo {
         return genres;
     }
 
-    /*@Override
-    public ArrayList<SearchTrack> getTrackByNameSearch(String name) {
-        ArrayList<SearchTrack> searchTracks = new ArrayList<>();
-        try {
-            // Connect to DB
-            conn = DriverManager.getConnection(URL);
-            logger.log("Connection to SQLite has been established.");
-            // Make SQL query
-            PreparedStatement preparedStatement =
-                   // conn.prepareStatement("SELECT TrackId , Name  FROM Track WHERE Name LIKE ?  ");
-                    conn.prepareStatement("SELECT Track.Name   , Album.Title ,Genre.Name as GName ,Artist.Name as AName \n" +
-                            "FROM Track,Album ,Genre ,Artist\n" +
-                            "where Track.AlbumId == Album.AlbumId\n" +
-                            "And Track.GenreId== Genre.GenreId\n" +
-                            "AND Album.ArtistId == Artist.ArtistId\n" +
-                            "AND Track.Name==  ? ");
-            preparedStatement.setString(1, name );
-            // Execute Query
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                searchTracks.add(
-                        new SearchTrack(
-                                resultSet.getString("Name"),
-                                resultSet.getString("Title"),
-                                resultSet.getString("GName"),
-                                resultSet.getString("AName")
-
-                        ));
-            }
-            logger.log("Select all customers successful");
-        } catch (Exception exception) {
-            logger.log(exception.toString());
-        } finally {
-            try {
-                conn.close();
-            } catch (Exception exception) {
-                logger.log(exception.toString());
-            }
-        }
-        return searchTracks;
-    }*/
     @Override
     public ArrayList<SearchTrack> getTrackByNameSearch(String name) {
         ArrayList<SearchTrack> searchTracks = new ArrayList<>();
