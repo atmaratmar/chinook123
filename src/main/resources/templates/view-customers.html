@@ -2,60 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/main.css}">
-<script th:src="@{/js/bootstrap.min.js}" ></script>
+<link rel="stylesheet" th:href="@{/css/customerView.css}">
+<script th:src="@{/js/bootstrap.min.js}"></script>
 <head>
     <meta charset="UTF-8">
     <title>View customers</title>
 </head>
 <head>
-    <style>
-        body {
-           padding-left: 200px;
-            background-color: seashell;
-        }
-        * {
-            box-sizing: border-box;
-        }
 
-        .row {
-            display: flex;
-            margin-left:-50px;
-            margin-right:-50px;
-        }
-
-        .column {
-            flex: 10%;
-            padding: 5px;
-        }
-
-        table {
-            border-collapse: collapse;
-            border-spacing: 1px;
-            width: 90%;
-            border: 2px solid #0b2e13;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 16px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
 
 <h2>Chinook Project </h2>
-<p>Random table gerator</p>
-
 <div class="row">
     <div class="column">
         <table>
             <thead>
             <tr>
-                <th scope="col">Random Artists</th>
+                <th scope="col">Random Artists Generator</th>
             </tr>
             </thead>
             <tbody>
@@ -69,7 +33,7 @@
         <table>
             <thead>
             <tr>
-                <th scope="col">Random Trcks</th>
+                <th scope="col">Random Trcks Generator</th>
             </tr>
             </thead>
             <tbody>
@@ -83,7 +47,7 @@
         <table>
             <thead>
             <tr>
-                <th scope="col">Random Genre</th>
+                <th scope="col">Random Genre Generator</th>
             </tr>
             </thead>
             <tbody>
@@ -93,11 +57,12 @@
 
         </table>
     </div>
-</div><br><br>
+</div>
+<br><br>
 <form th:action="@{/}" method="get">
     <input id="txtSearch" placeholder="Search tracks" type="text" name="keyword" required>
     <br>
-    <button type="submit"> Search </button>
+    <button type="submit"> Search</button>
     <h2>Search Results for Tracks</h2>
 
 </form>
