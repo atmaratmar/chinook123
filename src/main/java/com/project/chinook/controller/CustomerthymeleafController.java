@@ -18,7 +18,7 @@ public class CustomerthymeleafController {
         model.addAttribute("Artist", customerthymeRepo.getRandomArtists());
         model.addAttribute("Trck", customerthymeRepo.getRandomTrack());
         model.addAttribute("Genre", customerthymeRepo.getRandomGenre());
-        model.addAttribute("Customer", customerthymeRepo.getCustomerByNameSearch(keyword));
+        model.addAttribute("Trcko", customerthymeRepo.getTrackByNameSearch(keyword));
 
         return "view-customers";
 

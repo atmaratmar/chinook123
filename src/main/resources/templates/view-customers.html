@@ -9,14 +9,18 @@
 </head>
 <head>
     <style>
+        body {
+           padding-left: 200px;
+            background-color: seashell;
+        }
         * {
             box-sizing: border-box;
         }
 
         .row {
             display: flex;
-            margin-left:-5px;
-            margin-right:-5px;
+            margin-left:-50px;
+            margin-right:-50px;
         }
 
         .column {
@@ -26,9 +30,9 @@
 
         table {
             border-collapse: collapse;
-            border-spacing: 0;
-            width: 100%;
-            border: 1px solid #ddd;
+            border-spacing: 1px;
+            width: 90%;
+            border: 2px solid #0b2e13;
         }
 
         th, td {
@@ -89,26 +93,34 @@
 
         </table>
     </div>
-    <form th:action="@{/}" method="get">
-        <input id="txtSearch" type="text" name="keyword" required>
-        <button type="submit">go</button>
+</div><br><br>
+<form th:action="@{/}" method="get">
+    <input id="txtSearch" placeholder="Search tracks" type="text" name="keyword" required>
+    <br>
+    <button type="submit"> Search </button>
+    <h2>Search Results for Tracks</h2>
 
-    </form>
+</form>
+<br>
+<div class="column">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Track Name</th>
+            <th scope="col">Album</th>
+            <th scope="col">Artist Name</th>
+            <th scope="col">Genre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="track: ${Trcko} ">
+            <td th:text="${track.getTrackName()}"></td>
+            <td th:text="${track.getAlbumTitle()}"></td>
+            <td th:text="${track.getArtistName()}"></td>
+            <td th:text="${track.getGenreName()}"></td>
+        </tr>
 
-    <div class="column">
-        <table>
-            <thead>
-            <tr>
-                <th scope="col">Random byname</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="person: ${Customer} ">
-                <td th:text="${person.getFirstName()}"></td>
-            </tr>
-
-        </table>
-    </div>
+    </table>
 </div>
 </body>
 </html>
